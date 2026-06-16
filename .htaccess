@@ -1,0 +1,15 @@
+# Charset festlegen
+AddDefaultCharset UTF-8
+
+# Rewrite Engine
+RewriteEngine On
+RewriteBase /
+
+# WWW-Weiterleitung
+RewriteCond %{HTTP_HOST} !^www\.v29\.org$ [NC]
+RewriteRule ^(.*)$ https://www.v29.org/$1 [R=301,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^(.*)$ $1.html [L]
