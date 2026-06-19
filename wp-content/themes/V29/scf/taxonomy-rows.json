@@ -1,0 +1,61 @@
+[
+    {
+        "key": "taxonomy_6818d3f0a1b2c",
+        "title": "Rows",
+        "menu_order": 0,
+        "active": true,
+        "labels": {
+            "name": "Rows",
+            "singular_name": "Row",
+            "menu_name": "Rows",
+            "all_items": "All Rows",
+            "edit_item": "Edit Row",
+            "view_item": "View Row",
+            "update_item": "Update Row",
+            "add_new_item": "Add New Row",
+            "new_item_name": "New Row Name",
+            "search_items": "Search Rows",
+            "popular_items": "Popular Rows",
+            "separate_items_with_commas": "Separate rows with commas",
+            "add_or_remove_items": "Add or remove rows",
+            "choose_from_most_used": "Choose from the most used rows",
+            "not_found": "No rows found",
+            "no_terms": "No rows",
+            "name_field_description": "The name is how this row is labelled.",
+            "slug_field_description": "Leave this blank — the slug is generated automatically from the name and is only used internally. You don't need to fill it in.",
+            "items_list_navigation": "Rows list navigation",
+            "items_list": "Rows list",
+            "back_to_items": "Go to rows",
+            "item_link": "Row Link",
+            "item_link_description": "A link to a row."
+        },
+        "description": "Timeline rows for the V29 project. Each timeline item is assigned to one row.",
+        "public": false,
+        "publicly_queryable": false,
+        "hierarchical": true,
+        "show_ui": true,
+        "show_in_menu": true,
+        "show_in_nav_menus": false,
+        "show_in_rest": false,
+        "rest_base": "",
+        "rest_namespace": "wp/v2",
+        "rest_controller_class": "WP_REST_Terms_Controller",
+        "show_tagcloud": false,
+        "show_in_quick_edit": true,
+        "show_admin_column": true,
+        "rewrite": {
+            "permalink_rewrite": "no_permalink"
+        },
+        "query_var": "none",
+        "query_var_name": "",
+        "default_term": {
+            "default_term_enabled": "0"
+        },
+        "sort": "0",
+        "meta_box": "default",
+        "object_type": [
+            "v29_timeline_item"
+        ],
+        "taxonomy": "v29_row"
+    }
+]

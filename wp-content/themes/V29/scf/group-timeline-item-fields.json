@@ -1,0 +1,211 @@
+[
+    {
+        "key": "group_v29_timeline_item",
+        "title": "Timeline Item Fields",
+        "fields": [
+            {
+                "key": "field_v29_item_type",
+                "label": "Item type",
+                "name": "item_type",
+                "aria_label": "",
+                "type": "button_group",
+                "instructions": "Choose what kind of item this is. The fields below change to match your choice.",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "text": "Text",
+                    "media": "Media"
+                },
+                "default_value": "text",
+                "return_format": "value",
+                "allow_null": 0,
+                "layout": "horizontal"
+            },
+            {
+                "key": "field_v29_start_date",
+                "label": "Start date",
+                "name": "start_date",
+                "aria_label": "",
+                "type": "date_picker",
+                "instructions": "The date this item begins. Sets its horizontal position on the timeline.",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "display_format": "d.m.Y",
+                "return_format": "Y-m-d",
+                "first_day": 1
+            },
+            {
+                "key": "field_v29_end_date",
+                "label": "End date",
+                "name": "end_date",
+                "aria_label": "",
+                "type": "date_picker",
+                "instructions": "Optional. Set this for an item that spans a range; leave blank for a single point in time.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "display_format": "d.m.Y",
+                "return_format": "Y-m-d",
+                "first_day": 1
+            },
+            {
+                "key": "field_v29_gallery",
+                "label": "Media gallery",
+                "name": "gallery",
+                "aria_label": "",
+                "type": "repeater",
+                "instructions": "Add one or more images or videos. Each can have its own caption. The first one is used as the thumbnail on the timeline; the full set opens in the lightbox.",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_v29_item_type",
+                            "operator": "==",
+                            "value": "media"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "layout": "block",
+                "pagination": 0,
+                "min": 0,
+                "max": 0,
+                "collapsed": "field_v29_gallery_caption",
+                "button_label": "Add media",
+                "rows_per_page": 20,
+                "sub_fields": [
+                    {
+                        "key": "field_v29_gallery_file",
+                        "label": "Image or video",
+                        "name": "file",
+                        "aria_label": "",
+                        "type": "file",
+                        "instructions": "Upload an image (webp, jpg, png) or a video (mp4).",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "return_format": "array",
+                        "library": "all",
+                        "min_size": "",
+                        "max_size": "",
+                        "mime_types": "",
+                        "parent_repeater": "field_v29_gallery"
+                    },
+                    {
+                        "key": "field_v29_gallery_caption",
+                        "label": "Caption",
+                        "name": "caption",
+                        "aria_label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_v29_gallery"
+                    }
+                ]
+            },
+            {
+                "key": "field_v29_body",
+                "label": "Text",
+                "name": "body",
+                "aria_label": "",
+                "type": "wysiwyg",
+                "instructions": "The text shown for this item. Add inline links here by selecting text and using the link button.",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_v29_item_type",
+                            "operator": "==",
+                            "value": "text"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "tabs": "all",
+                "toolbar": "basic",
+                "media_upload": 0,
+                "delay": 0
+            },
+            {
+                "key": "field_v29_link",
+                "label": "External link",
+                "name": "link",
+                "aria_label": "",
+                "type": "link",
+                "instructions": "Optional. Links this item to an external site.",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_v29_item_type",
+                            "operator": "==",
+                            "value": "text"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array"
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "v29_timeline_item"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "Content fields for V29 timeline items.",
+        "show_in_rest": 0
+    }
+]

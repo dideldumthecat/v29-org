@@ -7,3 +7,10 @@ function v29_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'v29_enqueue_assets' );
 
 add_filter( 'show_admin_bar', '__return_false' );
+
+/**
+ * PHP includes
+ */
+require_once get_template_directory() . '/inc/rows-config.php';
+require_once get_template_directory() . '/inc/rows-dragdrop-config.php';
+require_once get_template_directory() . '/inc/timeline-item-order.php';
