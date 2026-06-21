@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="V29 ist ein sozial-ökologisches Kollektivbauprojekt" />
+    <meta name="robots" content="index, follow" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="canonical" href="https://v29.org/" />
+    <meta property="og:title" content="V29 ist ein sozial-ökologisches Kollektivbauprojekt" />
+    <meta property="og:description" content="V29 ist ein sozial-ökologisches Kollektivbauprojekt" />
+    <meta property="og:image" content="https://v29.org/media/og.webp" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://v29.org" />
+    <meta property="og:site_name" content="V29" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <title>V29</title>
+    <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+    <link rel="shortcut icon" href="favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="V29" />
+    <link rel="manifest" href="favicon/site.webmanifest" />
+    {{ function('wp_head') }}
+</head>
+<body class="{{ body_class }}">
+    {% block content %}{% endblock %}
+    {{ function('wp_footer') }}
+</body>
+</html>
