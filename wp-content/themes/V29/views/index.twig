@@ -69,18 +69,18 @@
 
                         {% for item in row.items %}
                             {% if item.kind == 'media' %}
-                                <div class="cell media-cell"
-                                    style="grid-row: {{ row.grid_row }}; grid-column: {{ item.grid_column }} / span {{ item.span }}">
-                                    {% if item.thumb %}
+                                {% if item.thumb %}
+                                    <div class="cell media-cell"
+                                        style="grid-row: {{ row.grid_row }}; grid-column: {{ item.grid_column }} / span {{ item.span }}">
                                         {% if item.thumb.type == 'video' %}
-                                            <video class="thumbnail" src="{{ item.thumb.src }}"muted autoplay loop playsinline preload="auto"
+                                            <video class="thumbnail no-lazy" src="{{ item.thumb.src }}" muted autoplay loop playsinline preload="auto"
                                                 data-media="{{ item.media_json|e('html') }}"></video>
                                         {% else %}
-                                            <img class="thumbnail" src="{{ item.thumb.src }}" alt="{{ item.title }}"
+                                            <img class="thumbnail no-lazy" src="{{ item.thumb.src }}" alt="{{ item.title }}"
                                                 data-media="{{ item.media_json|e('html') }}" />
                                         {% endif %}
-                                    {% endif %}
-                                </div>
+                                    </div>
+                                {% endif %}
                             {% else %}
                                 {% set cls = item.active ? 'cell active' : 'cell event' %}
                                 {% if item.link %}
