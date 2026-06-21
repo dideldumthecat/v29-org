@@ -31,3 +31,6 @@ wp-content/themes/*
 
 # Database backups
 *.sql
+
+# AI
+CLAUDE.md
