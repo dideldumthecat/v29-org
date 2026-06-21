@@ -150,6 +150,11 @@ function v29_apply_spans( $items, $last_col ) {
     return $items;
 }
 
+function v29_get_page_content( $slug ) {
+    $page = get_page_by_path( $slug );
+    return $page ? apply_filters( 'the_content', $page->post_content ) : '';
+}
+
 function v29_get_timeline_rows() {
     $columns  = v29_get_timeline_columns();
     $col_map  = v29_build_column_map( $columns );
