@@ -353,9 +353,9 @@ impressumClose.addEventListener("click", () => {
 // ------------------------------
 
 const bgImages = [
-    { x: 0, src: "media/bg_a.webp" },
-    { x: 2000, src: "media/bg_b.webp" },
-    { x: 4000, src: "media/bg_c.webp" }
+    { x: 0, src: "wp-content/themes/V29/assets/images/bg_a.webp" },
+    { x: 2000, src: "wp-content/themes/V29/assets/images/bg_b.webp" },
+    { x: 4000, src: "wp-content/themes/V29/assets/images/bg_c.webp" }
 ];
 
 const bgA = document.getElementById("bg-a");
@@ -425,11 +425,11 @@ function getFramePrefix() {
     const width = window.innerWidth;
 
     if (width <= 500) {
-        return "sequence/mobile/logoanimation_";
+        return "/wp-content/themes/V29/assets/images/sequence/mobile/logoanimation_";
     } else if (width <= 800) {
-        return "sequence/middle/logoanimation_";
+        return "/wp-content/themes/V29/assets/images/sequence/middle/logoanimation_";
     } else {
-        return "sequence/desktop/logoanimation_";
+        return "/wp-content/themes/V29/assets/images/sequence/desktop/logoanimation_";
     }
 }
 
