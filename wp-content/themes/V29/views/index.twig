@@ -65,7 +65,7 @@
                             {% else %}
                                 {% set cls = item.active ? 'cell active' : 'cell event' %}
                                 {% if item.link %}
-                                <a class="{{ cls }}" href="{{ item.link.url }}"{% if item.link.target %} target="{{ item.link.target }}"{% endif %}
+                                <a class="{{ cls }}" href="{{ item.link.url }}" target="_blank" rel="noopener noreferrer"
                                     style="grid-row: {{ row.grid_row }}; grid-column: {{ item.grid_column }} / span {{ item.span }}">{{ item.body|raw }}</a>
                                 {% else %}
                                 <div class="{{ cls }}"

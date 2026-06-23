@@ -86,13 +86,18 @@ function v29_date_to_column( $date, $col_map ) {
         ?? null;
 }
 
+function v29_force_link_targets( string $html ): string {
+    $html = preg_replace( '/(<a\b[^>]*?)\s+target="[^"]*"/i', '$1', $html );
+    return preg_replace( '/(<a\b[^>]*?)>/i', '$1 target="_blank" rel="noopener noreferrer">', $html );
+}
+
 function v29_build_text_item( $post_id, $col_map ) {
     $start = get_field( 'start_date', $post_id );
     $end   = get_field( 'end_date', $post_id ) ?: null;
 
     return [
         'kind'      => 'text',
-        'body'      => wp_kses_post( get_field( 'body', $post_id ) ),
+        'body'      => v29_force_link_targets( wp_kses_post( get_field( 'body', $post_id ) ) ),
         'link'      => get_field( 'link', $post_id ) ?: null,
         'start_col' => v29_date_to_column( $start, $col_map ) ?: 2,
         'end_col'   => $end ? v29_date_to_column( $end, $col_map ) : null,
@@ -152,7 +157,7 @@ function v29_apply_spans( $items, $last_col ) {
 
 function v29_get_page_content( $slug ) {
     $page = get_page_by_path( $slug );
-    return $page ? apply_filters( 'the_content', $page->post_content ) : '';
+    return $page ? v29_force_link_targets( apply_filters( 'the_content', $page->post_content ) ) : '';
 }
 
 function v29_get_timeline_rows() {
