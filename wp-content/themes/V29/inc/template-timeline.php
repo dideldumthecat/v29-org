@@ -96,7 +96,7 @@ function v29_build_text_item( $post_id, $col_map ) {
         'link'      => get_field( 'link', $post_id ) ?: null,
         'start_col' => v29_date_to_column( $start, $col_map ) ?: 2,
         'end_col'   => $end ? v29_date_to_column( $end, $col_map ) : null,
-        'active'    => ( $end ?: $start ) >= current_time( 'Y-m-d' ),
+        'active'    => $end !== null || $start >= current_time( 'Y-m-d' ),
     ];
 }
 
