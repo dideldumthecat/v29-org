@@ -250,6 +250,10 @@ textarea {
     box-sizing: border-box;
 }
 
+.lightbox-track.is-single {
+    justify-content: center;
+}
+
 .lightbox-item {
     flex: 0 0 auto;
     max-width: 60vw;

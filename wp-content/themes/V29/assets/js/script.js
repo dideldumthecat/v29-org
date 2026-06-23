@@ -52,6 +52,7 @@ function updateActiveMedia() {
 
 function renderCarousel() {
     track.innerHTML = "";
+    track.classList.toggle("is-single", mediaList.length === 1);
 
     mediaList.forEach((media, i) => {
         const item = document.createElement("div");
