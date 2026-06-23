@@ -20,15 +20,8 @@ const track = document.getElementById("lightbox-track");
 let mediaList = [];
 let activeIndex = 0;
 
-// Monatsdefinition pro Jahr
-const monthsPerYear = {
-    2025: 11,
-    2026: 12,
-    2027: 1,
-    2028: 1,
-    2029: 1,
-    2030: 1
-};
+// Monatsdefinition pro Jahr (aus PHP, siehe window.V29Timeline)
+const monthsPerYear = (window.V29Timeline && window.V29Timeline.monthsPerYear) || {};
 
 // ------------------------------
 // Lightbox-Funktionen
@@ -165,8 +158,7 @@ function getLabelWidth() {
 
 function getTodayPosition() {
     const today = new Date();
-    const startYear = 2025;
-    const startMonth = 0;
+    const startYear = (window.V29Timeline && window.V29Timeline.startYear) || today.getFullYear();
 
     let monthsSinceStart = 0;
 
@@ -174,7 +166,7 @@ function getTodayPosition() {
         monthsSinceStart += monthsPerYear[year] || 12;
     }
 
-    monthsSinceStart += today.getMonth() - startMonth;
+    monthsSinceStart += today.getMonth();
 
     return getLabelWidth() + monthsSinceStart * getMonthWidth() + getMonthWidth() / 2;
 }

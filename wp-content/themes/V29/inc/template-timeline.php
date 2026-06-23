@@ -25,6 +25,23 @@ function v29_get_timeline_columns() {
     return $columns;
 }
 
+function v29_get_timeline_js_config() {
+    $columns = v29_get_timeline_columns();
+    if ( ! $columns ) {
+        return null;
+    }
+
+    $months_per_year = [];
+    foreach ( $columns as $col ) {
+        $months_per_year[ $col['year'] ] = ( $months_per_year[ $col['year'] ] ?? 0 ) + 1;
+    }
+
+    return [
+        'startYear'     => $columns[0]['year'],   // = bounds start_year
+        'monthsPerYear' => $months_per_year,       // past/present year → month count; future year → 1
+    ];
+}
+
 function v29_get_timeline_bounds() {
     $earliest_start = v29_edge_date( 'start_date', 'ASC' );
     if ( ! $earliest_start ) {

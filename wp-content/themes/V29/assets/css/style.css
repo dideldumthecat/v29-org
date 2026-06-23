@@ -166,7 +166,8 @@ textarea {
 
 .timeline {
     display: grid;
-    grid-template-columns: var(--first-col-width) repeat(23, var(--month-width)) repeat(4, var(--month-width));
+    /* Data columns are written inline by Twig (views/index.twig) from the dynamic column count. */
+    grid-template-columns: var(--first-col-width);
     grid-template-rows: 3.5% 3.5% 15.5% 15.5% 15.5% 15.5% 15.5% 15.5%;
     width: max-content;
     height: 100vh;
