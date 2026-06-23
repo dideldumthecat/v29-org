@@ -28,8 +28,8 @@
 
                     <div class="cell header" style="grid-row: 1; grid-column: 1"></div>
                     {% for yh in year_headers %}
-                        <div class="cell year{% if yh.span == 1 %} year-col{% endif %}"
-                            style="grid-row: 1; grid-column: {{ yh.grid_column }} / span {{ yh.span }}">{{ yh.year }}</div>
+                        <div class="cell year{% if yh.span == 1 %} year-compressed{% endif %}"
+                            style="grid-row: 1; grid-column: {{ yh.grid_column }} / span {{ yh.span }}">{%- if yh.span > 1 %}<span>{% endif %}{{ yh.year }}{%- if yh.span > 1 %}</span>{% endif -%}</div>
                     {% endfor %}
 
                     <div class="cell header" style="grid-row: 2; grid-column: 1"></div>

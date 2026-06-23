@@ -109,13 +109,32 @@ textarea {
 }
 
 .year,
-.year-col {
+.year-compressed {
     position: sticky;
     top: 0;
     left: var(--first-col-width);
     text-align: left;
     z-index: 30;
     background: none;
+}
+
+.year-compressed {
+    left: auto;
+}
+
+.year:not(.year-compressed) {
+    position: static;
+    overflow: clip;
+}
+
+.year:not(.year-compressed) > span {
+    display: block;
+    position: sticky;
+    top: 0;
+    left: var(--first-col-width);
+    z-index: 30;
+    background: none;
+    padding-right: 20px;
 }
 
 .info-cell {
