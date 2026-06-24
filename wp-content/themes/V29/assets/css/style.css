@@ -1,6 +1,5 @@
 :root {
     --month-width: 150px;
-    --first-col-width: 88px;
 }
 
 .sr-only {
@@ -112,7 +111,7 @@ textarea {
 .year-compressed {
     position: sticky;
     top: 0;
-    left: var(--first-col-width);
+    left: var(--month-width);
     text-align: left;
     z-index: 30;
     background: none;
@@ -131,7 +130,7 @@ textarea {
     display: block;
     position: sticky;
     top: 0;
-    left: var(--first-col-width);
+    left: var(--month-width);
     z-index: 30;
     background: none;
     padding-right: 20px;
@@ -186,7 +185,7 @@ textarea {
 .timeline {
     display: grid;
     /* Data columns are written inline by Twig (views/index.twig) from the dynamic column count. */
-    grid-template-columns: var(--first-col-width);
+    grid-template-columns: var(--month-width);
 
     width: max-content;
     height: 100vh;
@@ -221,7 +220,7 @@ textarea {
 
 .media-cell {
     padding-left: 0;
-    height: 15.5vh;
+    height: 100%;
     width: 100%;
     overflow: hidden;
     cursor: pointer;

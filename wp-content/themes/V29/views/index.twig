@@ -22,7 +22,7 @@
 
         <section class="timeline-section">
             <div class="timeline-container">
-                <div class="timeline" style="grid-template-columns: var(--first-col-width) repeat({{ columns|length }}, var(--month-width)); grid-template-rows: 3.5% 3.5% repeat({{ rows|length }}, 1fr);">
+                <div class="timeline" style="grid-template-columns: var(--month-width) repeat({{ columns|length }}, var(--month-width)); grid-template-rows: 3.5% 3.5% repeat({{ rows|length }}, minmax(0, 1fr));">
 
                     {% set months = ['', 'Jän', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'] %}
 
