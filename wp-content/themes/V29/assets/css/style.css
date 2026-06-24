@@ -239,14 +239,14 @@ textarea {
     color: black;
 }
 
-.active {
+.period {
     color: black;
     background: white;
     mix-blend-mode: color-dodge;
     opacity: 1;
 }
 
-.active a {
+.period a {
     color: black;
 }
 
@@ -308,11 +308,11 @@ textarea {
     mix-blend-mode: multiply;
 }
 
-.cell.event {
+.cell.milestone {
     position: relative;
 }
 
-.cell.event::before {
+.cell.milestone::before {
     content: "";
     position: absolute;
     top: 0;

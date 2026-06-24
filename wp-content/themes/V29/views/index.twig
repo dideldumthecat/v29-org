@@ -29,12 +29,12 @@
                     <div class="cell header" style="grid-row: 1; grid-column: 1"></div>
                     {% for yh in year_headers %}
                         <div class="cell year{% if yh.span == 1 %} year-compressed{% endif %}"
-                            style="grid-row: 1; grid-column: {{ yh.grid_column }} / span {{ yh.span }}">{%- if yh.span > 1 %}<span>{% endif %}{{ yh.year }}{%- if yh.span > 1 %}</span>{% endif -%}</div>
+                            style="grid-row: 1; grid-column: {{ yh.col_start }} / span {{ yh.span }}">{%- if yh.span > 1 %}<span>{% endif %}{{ yh.year }}{%- if yh.span > 1 %}</span>{% endif -%}</div>
                     {% endfor %}
 
                     <div class="cell header" style="grid-row: 2; grid-column: 1"></div>
                     {% for col in columns %}
-                        <div class="cell header" style="grid-row: 2; grid-column: {{ loop.index + 1 }}">{% if col.kind == 'month' %}{{ months[col.month] }}{% endif %}</div>
+                        <div class="cell header" style="grid-row: 2; grid-column: {{ loop.index + 1 }}">{% if col.col_type == 'month' %}{{ months[col.month] }}{% endif %}</div>
                     {% endfor %}
 
                     <div class="cell info-cell" style="grid-column: {{ columns|length + 2 }} / span 1; grid-row: 3 / -1">
@@ -49,11 +49,11 @@
                         <div class="cell row-title" style="grid-row: {{ row.grid_row }}; grid-column: 1">{{ row.title }}</div>
 
                         {% for item in row.items %}
-                            {% if item.kind == 'media' %}
+                            {% if item.item_type == 'media' %}
                                 {% if item.thumb %}
                                     <div class="cell media-cell"
-                                        style="grid-row: {{ row.grid_row }}; grid-column: {{ item.grid_column }} / span {{ item.span }}">
-                                        {% if item.thumb.type == 'video' %}
+                                        style="grid-row: {{ row.grid_row }}; grid-column: {{ item.col_start }} / span {{ item.span }}">
+                                        {% if item.thumb.format == 'video' %}
                                             <video class="thumbnail no-lazy" src="{{ item.thumb.src }}" muted autoplay loop playsinline preload="auto"
                                                 data-media="{{ item.media_json|e('html') }}"></video>
                                         {% else %}
@@ -63,13 +63,13 @@
                                     </div>
                                 {% endif %}
                             {% else %}
-                                {% set cls = item.active ? 'cell active' : 'cell event' %}
+                                {% set cls = item.is_period ? 'cell period' : 'cell milestone' %}
                                 {% if item.link %}
                                 <a class="{{ cls }}" href="{{ item.link.url }}" target="_blank" rel="noopener noreferrer"
-                                    style="grid-row: {{ row.grid_row }}; grid-column: {{ item.grid_column }} / span {{ item.span }}">{{ item.body|raw }}</a>
+                                    style="grid-row: {{ row.grid_row }}; grid-column: {{ item.col_start }} / span {{ item.span }}">{{ item.body|raw }}</a>
                                 {% else %}
                                 <div class="{{ cls }}"
-                                    style="grid-row: {{ row.grid_row }}; grid-column: {{ item.grid_column }} / span {{ item.span }}">{{ item.body|raw }}</div>
+                                    style="grid-row: {{ row.grid_row }}; grid-column: {{ item.col_start }} / span {{ item.span }}">{{ item.body|raw }}</div>
                                 {% endif %}
                             {% endif %}
                         {% endfor %}

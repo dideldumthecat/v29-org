@@ -15,10 +15,10 @@ function v29_get_timeline_columns() {
         if ( $year <= $current_year ) {
             $from = ( $year === $bounds['start_year'] ) ? $bounds['start_month'] : 1;
             for ( $month = $from; $month <= 12; $month++ ) {
-                $columns[] = [ 'kind' => 'month', 'year' => $year, 'month' => $month ];
+                $columns[] = [ 'col_type' => 'month', 'year' => $year, 'month' => $month ];
             }
         } else {
-            $columns[] = [ 'kind' => 'year', 'year' => $year, 'month' => null ];
+            $columns[] = [ 'col_type' => 'year', 'year' => $year, 'month' => null ];
         }
     }
 
@@ -76,7 +76,7 @@ function v29_get_year_headers( $columns ) {
     foreach ( $columns as $i => $col ) {
         $year = $col['year'];
         if ( ! isset( $headers[ $year ] ) ) {
-            $headers[ $year ] = [ 'year' => $year, 'grid_column' => $i + 2, 'span' => 0 ];
+            $headers[ $year ] = [ 'year' => $year, 'col_start' => $i + 2, 'span' => 0 ];
         }
         $headers[ $year ]['span']++;
     }
@@ -86,7 +86,7 @@ function v29_get_year_headers( $columns ) {
 function v29_build_column_map( $columns ) {
     $map = [];
     foreach ( $columns as $i => $col ) {
-        $key = $col['kind'] === 'month'
+        $key = $col['col_type'] === 'month'
             ? sprintf( '%04d-%02d', $col['year'], $col['month'] )
             : sprintf( '%04d', $col['year'] );
         $map[ $key ] = $i + 2;
@@ -113,12 +113,12 @@ function v29_build_text_item( $post_id, $col_map ) {
     $end   = get_field( 'end_date', $post_id ) ?: null;
 
     return [
-        'kind'      => 'text',
+        'item_type' => 'text',
         'body'      => v29_force_link_targets( wp_kses_post( get_field( 'body', $post_id ) ) ),
         'link'      => get_field( 'link', $post_id ) ?: null,
-        'start_col' => v29_date_to_column( $start, $col_map ) ?: 2,
-        'end_col'   => $end ? v29_date_to_column( $end, $col_map ) : null,
-        'active'    => $end !== null || $start >= current_time( 'Y-m-d' ),
+        'col_start' => v29_date_to_column( $start, $col_map ) ?: 2,
+        'col_end'   => $end ? v29_date_to_column( $end, $col_map ) : null,
+        'is_period' => $end !== null,
     ];
 }
 
@@ -135,7 +135,7 @@ function v29_build_media_item( $post_id, $col_map ) {
         }
         $mime = $file['mime_type'] ?? '';
         $media[] = [
-            'type'    => ( strpos( $mime, 'video/' ) === 0 ) ? 'video' : 'image',
+            'format'  => ( strpos( $mime, 'video/' ) === 0 ) ? 'video' : 'image',
             'src'     => $file['url'],
             'caption' => $entry['caption'] ?? '',
             // 'white' is intentionally omitted for now — it becomes the hook for the
@@ -144,29 +144,28 @@ function v29_build_media_item( $post_id, $col_map ) {
     }
 
     return [
-        'kind'       => 'media',
+        'item_type'  => 'media',
         'title'      => get_the_title( $post_id ),
         'thumb'      => $media[0] ?? null,      // first item is the thumbnail
         'media_json' => wp_json_encode( $media, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ),
-        'start_col'  => v29_date_to_column( $start, $col_map ) ?: 2,
-        'end_col'    => $end ? v29_date_to_column( $end, $col_map ) : null,
+        'col_start'  => v29_date_to_column( $start, $col_map ) ?: 2,
+        'col_end'    => $end ? v29_date_to_column( $end, $col_map ) : null,
     ];
 }
 
 function v29_apply_spans( $items, $last_col ) {
     $count = count( $items );
     foreach ( $items as $i => &$item ) {
-        if ( $item['end_col'] ) {
-            $span = $item['end_col'] - $item['start_col'] + 1;          // explicit range (start + end date)
-        } elseif ( ( $item['kind'] ?? 'text' ) === 'media' ) {
+        if ( $item['col_end'] ) {
+            $span = $item['col_end'] - $item['col_start'] + 1;          // explicit range (start + end date)
+        } elseif ( ( $item['item_type'] ?? 'text' ) === 'media' ) {
             $span = 1;                                                   // media without an end date = single point
         } elseif ( $i + 1 < $count ) {
-            $span = $items[ $i + 1 ]['start_col'] - $item['start_col']; // text fills to the next item
+            $span = $items[ $i + 1 ]['col_start'] - $item['col_start']; // text fills to the next item
         } else {
-            $span = $last_col - $item['start_col'] + 1;                 // text fills to the end
+            $span = $last_col - $item['col_start'] + 1;                 // text fills to the end
         }
-        $item['grid_column'] = $item['start_col'];
-        $item['span']        = max( 1, $span );
+        $item['span'] = max( 1, $span );
     }
     unset( $item );
     return $items;
