@@ -5,8 +5,8 @@ if ( class_exists( 'Timber\Timber' ) ) {
 }
 
 function v29_enqueue_assets() {
-    wp_enqueue_style( 'v29-style', get_template_directory_uri() . '/assets/css/style.css', [], '1.0' );
-    wp_enqueue_script( 'v29-script', get_template_directory_uri() . '/assets/js/script.js', [], '1.0', true );
+    wp_enqueue_style( 'v29-style', get_template_directory_uri() . '/assets/css/style.css', [], substr( md5_file( get_template_directory() . '/assets/css/style.css' ), 0, 8 ) );
+    wp_enqueue_script( 'v29-script', get_template_directory_uri() . '/assets/js/script.js', [], substr( md5_file( get_template_directory() . '/assets/js/script.js' ), 0, 8 ), true );
 
     $config = v29_get_timeline_js_config();
     if ( $config ) {

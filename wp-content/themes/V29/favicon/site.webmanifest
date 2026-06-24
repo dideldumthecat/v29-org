@@ -3,13 +3,13 @@
   "short_name": "V29",
   "icons": [
     {
-      "src": "/wp-content/themes/V29/favicon/web-app-manifest-192x192.png",
+      "src": "/wp-content/themes/V29/favicon/web-app-manifest-192x192.png?v=1.0",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/wp-content/themes/V29/favicon/web-app-manifest-512x512.png",
+      "src": "/wp-content/themes/V29/favicon/web-app-manifest-512x512.png?v=1.0",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
