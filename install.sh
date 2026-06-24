@@ -11,7 +11,7 @@ set +a
 ${COMPOSER_COMMAND}
 
 wp core download --path=./ --locale=en_US
-wp core install --path=./ --url="$WP_SITE_URL" --title="$WP_SITE_TITLE" --admin_user="$WP_ADMIN_USER" --admin_password="$WP_ADMIN_PASS" --admin_email="$WP_ADMIN_EMAIL"
+wp core install --path=./ --url="$WP_SITE_URL" --title="$WP_SITE_TITLE" --admin_user="$WP_ADMIN_USER" --admin_password="$WP_ADMIN_PASSWORD" --admin_email="$WP_ADMIN_EMAIL"
 
 # Install the Secure Custom Fields and SMTP plugins
 wp plugin install secure-custom-fields --activate
