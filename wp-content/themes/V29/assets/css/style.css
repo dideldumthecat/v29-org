@@ -342,6 +342,38 @@ textarea {
     padding-left: 0;
 }
 
+a {
+    color: inherit;
+    text-decoration: underline dotted;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.cell a[href^="http"]::after,
+.info-cell a[href^="http"]::after {
+    content: " ↗";
+    -webkit-text-stroke: 1px currentColor;
+    margin-right: 0.5rem;
+}
+
+a.cell[href^="http"] {
+    position: relative;
+}
+
+a.cell[href^="http"]::after {
+    content: "↗";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    line-height: 1;
+    opacity: 0.75;
+    pointer-events: none;
+    -webkit-text-stroke: 1px currentColor;
+}
+
 .cell-top,
 .cell-bottom {
     padding-left: 15px;
@@ -371,16 +403,6 @@ textarea {
 
 .timeline-controls button:hover {
     background: #eee;
-}
-
-a {
-    text-decoration: none;
-    color: white;
-    opacity: 1;
-}
-
-a:hover {
-    opacity: 0.7;
 }
 
 .impressum-overlay {
@@ -420,15 +442,6 @@ a:hover {
 
 .impressum-close:hover {
     background: #eee;
-}
-
-.impressum-overlay a {
-    color: black;
-    text-decoration: underline dotted gray;
-}
-
-.impressum-overlay a:hover {
-    text-decoration: none;
 }
 
 @media (max-width: 800px) {
