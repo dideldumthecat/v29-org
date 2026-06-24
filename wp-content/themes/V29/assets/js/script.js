@@ -406,6 +406,9 @@ const fps = 15;
 const frameInterval = 1000 / fps;
 let lastTime = 0;
 
+let animationActive = false;
+let requestAnimationFrameId = null;
+
 const imageCache = new Map();
 
 const PRELOAD_AHEAD = 6;
@@ -461,7 +464,16 @@ function preloadFrame(index) {
 }
 
 // ------------------------------
+function evictCache(index) {
+    for (const key of imageCache.keys()) {
+        if (key < index - PRELOAD_BEHIND - 1 || key > index + PRELOAD_AHEAD + 1) {
+            imageCache.delete(key);
+        }
+    }
+}
+
 function preloadAround(index) {
+    evictCache(index);
     for (let i = -PRELOAD_BEHIND; i <= PRELOAD_AHEAD; i++) {
         preloadFrame(index + i);
     }
@@ -491,7 +503,27 @@ function animateWebPSequence(timestamp) {
         lastTime = timestamp;
     }
 
-    requestAnimationFrame(animateWebPSequence);
+    if (animationActive) {
+        requestAnimationFrameId = requestAnimationFrame(animateWebPSequence);
+    }
+}
+
+// ------------------------------
+// Animation steuern
+// ------------------------------
+function startAnimation() {
+    if (animationActive) return;
+    lastTime = 0;
+    animationActive = true;
+    requestAnimationFrameId = requestAnimationFrame(animateWebPSequence);
+}
+
+function stopAnimation() {
+    animationActive = false;
+    if (requestAnimationFrameId) {
+        cancelAnimationFrame(requestAnimationFrameId);
+        requestAnimationFrameId = null;
+    }
 }
 
 // ------------------------------
@@ -527,7 +559,7 @@ function initSequence() {
 // ------------------------------
 window.addEventListener("load", () => {
     initSequence();
-    requestAnimationFrame(animateWebPSequence);
+    startAnimation();
 });
 
 // ------------------------------
@@ -541,6 +573,19 @@ window.addEventListener("resize", () => {
     resizeTimeout = setTimeout(() => {
         initSequence();
     }, 150);
+});
+
+// ------------------------------
+// Animation pausieren wenn außerhalb des Sichtbereichs
+// ------------------------------
+const sequenceObserver = new IntersectionObserver((entries) => {
+    entries[0].isIntersecting ? startAnimation() : stopAnimation();
+}, { threshold: 0 });
+
+if (titleImg) sequenceObserver.observe(titleImg);
+
+document.addEventListener("visibilitychange", () => {
+    document.hidden ? stopAnimation() : startAnimation();
 });
 
 // ------------------------------
