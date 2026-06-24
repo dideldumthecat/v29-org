@@ -1,0 +1,7 @@
+.env
+.ddev
+.git
+.gitignore
+.github
+key.pem
+known_hosts
