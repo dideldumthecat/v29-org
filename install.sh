@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-_php="${PHP_BINARY:-php}"
+_php="${PHP_BINARY:-$(command -v php8.4-cli || command -v php8.4 || command -v php)}"
 _wp_phar="$(find /usr/share/php/wp-cli -name '*.phar' 2>/dev/null | sort | tail -1)"
 if [ -n "$_wp_phar" ]; then
     wp() { "$_php" "$_wp_phar" "$@"; }
