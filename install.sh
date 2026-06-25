@@ -1,12 +1,18 @@
 #!/bin/bash
 set -e
 
+# PHP binary: explicit override via PHP_BINARY env var, otherwise probe for php8.4-cli.
 _php="${PHP_BINARY:-$(command -v php8.4-cli || command -v php8.4 || command -v php)}"
+
+# IONOS's system `wp` wrapper hardcodes /usr/bin/php8.0-cli and ignores WP_CLI_PHP.
+# Find the WP-CLI PHAR and invoke it directly with $_php instead.
 _wp_phar="$(find /usr/share/php/wp-cli -name '*.phar' 2>/dev/null | sort | tail -1)"
 if [ -n "$_wp_phar" ]; then
     wp() { "$_php" "$_wp_phar" "$@"; }
 fi
 
+# Read constants from wp-config-*.php into shell variables.
+# PHP echoes assignments like WP_SITE_URL='https://...' and eval sets them here.
 eval "$($_php -r "
 if (getenv('IS_DDEV_PROJECT') === 'true') {
     define('ABSPATH', getcwd() . '/');
