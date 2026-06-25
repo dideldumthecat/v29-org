@@ -5,3 +5,4 @@
 key.pem
 known_hosts
 wp-config-production.php
+wp-config-ddev.php
