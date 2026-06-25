@@ -57,7 +57,7 @@ function renderCarousel() {
 
         let el;
 
-        if (media.type === "video") {
+        if (media.format === "video") {
             el = document.createElement("video");
             el.src = media.src;
             el.loop = true;
