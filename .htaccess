@@ -10,6 +10,7 @@ RewriteRule . /index.php [L]
 # END WordPress
 
 # IONOS-specific config
+AddHandler application/x-httpd-php84 .php
 ErrorDocument 503 "Server broken"
 ErrorDocument 500 "Server broken"
 ErrorDocument 404 "File not found"
