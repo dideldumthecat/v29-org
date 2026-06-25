@@ -1,21 +1,29 @@
 #!/bin/bash
+set -e
 
-# Enable debugging and logging
-#set -x
+_php="${PHP_BINARY:-php}"
+export WP_CLI_PHP="$_php"
+eval "$($_php -r "
+if (getenv('IS_DDEV_PROJECT') === 'true') {
+    define('ABSPATH', getcwd() . '/');
+    require 'wp-config-ddev.php';
+} else {
+    require 'wp-config-production.php';
+}
+echo 'WP_SITE_URL='      . escapeshellarg(WP_SITEURL)       . PHP_EOL;
+echo 'WP_SITE_TITLE='    . escapeshellarg(WP_SITE_TITLE)    . PHP_EOL;
+echo 'WP_ADMIN_USER='    . escapeshellarg(WP_ADMIN_USER)    . PHP_EOL;
+echo 'WP_ADMIN_PASSWORD='. escapeshellarg(WP_ADMIN_PASSWORD). PHP_EOL;
+echo 'WP_ADMIN_EMAIL='   . escapeshellarg(WP_ADMIN_EMAIL)   . PHP_EOL;
+echo 'MY_THEME='         . escapeshellarg(WP_THEME)         . PHP_EOL;
+")"
 
-# Load environment variables from the .env file
-set -a
-source .env
-set +a
-
-${COMPOSER_COMMAND}
-
-wp core download --path=./ --locale=en_US
-wp core install --path=./ --url="$WP_SITE_URL" --title="$WP_SITE_TITLE" --admin_user="$WP_ADMIN_USER" --admin_password="$WP_ADMIN_PASSWORD" --admin_email="$WP_ADMIN_EMAIL"
+wp core download --path=./ --locale=en_US || true
+wp core install --path=./ --url="$WP_SITE_URL" --title="$WP_SITE_TITLE" --admin_user="$WP_ADMIN_USER" --admin_password="$WP_ADMIN_PASSWORD" --admin_email="$WP_ADMIN_EMAIL" || true
 
 # Install the Secure Custom Fields and SMTP plugins
-wp plugin install secure-custom-fields --activate
-wp plugin install wp-mail-smtp --activate
+wp plugin install secure-custom-fields --activate --force
+wp plugin install wp-mail-smtp --activate --force
 
 # Activate theme
 wp theme activate "$MY_THEME"
@@ -25,6 +33,3 @@ wp plugin list --status=inactive --field=name | grep -v "wp-mail-smtp" | grep -v
 
 # Remove all other themes except the activated theme
 wp theme list --status=inactive --field=name | grep -v "$MY_THEME" | xargs -I {} wp theme delete {}
-
-# For local development
-# wp user update admin --user_pass=admin

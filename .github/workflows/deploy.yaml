@@ -27,16 +27,22 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > key.pem
           chmod 600 key.pem
 
+      - name: Install Composer dependencies
+        run: composer install --no-dev --optimize-autoloader
+
       - name: Deploy to server via SFTP
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
           REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
+          PHP_BINARY: ${{ secrets.PHP_BINARY }}
         run: |
           rsync -avz --delete --exclude-from='.rsync-exclude' -e "ssh -i key.pem -o UserKnownHostsFile=known_hosts" ./ $SSH_USERNAME@$SSH_HOST:$REMOTE_PATH
-          ssh -i key.pem -o UserKnownHostsFile=known_hosts $SSH_USERNAME@$SSH_HOST "cd $REMOTE_PATH && bash install.sh"
+          ssh -i key.pem -o UserKnownHostsFile=known_hosts $SSH_USERNAME@$SSH_HOST "cd $REMOTE_PATH && PHP_BINARY='$PHP_BINARY' bash install.sh && rm install.sh"
 
       - name: Clean up
+        if: always()
         run: |
-          rm key.pem
-          rm known_hosts
+          rm -f key.pem
+          rm -f known_hosts
+          rm -r install.sh
