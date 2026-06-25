@@ -2,7 +2,9 @@
 set -e
 
 _php="${PHP_BINARY:-php}"
-export WP_CLI_PHP="$_php"
+_wp_phar="$(find /usr/share/php/wp-cli -name '*.phar' 2>/dev/null | sort | tail -1)"
+wp() { "$_php" "$_wp_phar" "$@"; }
+
 eval "$($_php -r "
 if (getenv('IS_DDEV_PROJECT') === 'true') {
     define('ABSPATH', getcwd() . '/');
@@ -29,7 +31,7 @@ wp plugin install wp-mail-smtp --activate --force
 wp theme activate "$MY_THEME"
 
 # Remove all other plugins except the SCF and SMTP plugins
-wp plugin list --status=inactive --field=name | grep -v "wp-mail-smtp" | grep -v "secure-custom-fields" | xargs -I {} wp plugin delete {}
+wp plugin list --status=inactive --field=name | grep -v "wp-mail-smtp" | grep -v "secure-custom-fields" | while read -r name; do wp plugin delete "$name"; done
 
 # Remove all other themes except the activated theme
-wp theme list --status=inactive --field=name | grep -v "$MY_THEME" | xargs -I {} wp theme delete {}
+wp theme list --status=inactive --field=name | grep -v "$MY_THEME" | while read -r name; do wp theme delete "$name"; done
