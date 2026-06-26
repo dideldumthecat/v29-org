@@ -72,3 +72,14 @@ FileETag None
     AddOutputFilterByType DEFLATE application/javascript
     AddOutputFilterByType DEFLATE application/x-javascript
 </IfModule>
+
+# Disable XML-RPC
+<IfModule mod_alias.c>
+	RedirectMatch 403 (?i)/xmlrpc\.php
+</IfModule>
+
+# Disable access to all hidden files
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
