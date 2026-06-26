@@ -44,4 +44,3 @@ jobs:
         run: |
           rm -f key.pem
           rm -f known_hosts
-          rm -r install.sh
