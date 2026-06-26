@@ -21,7 +21,7 @@ if (getenv('IS_DDEV_PROJECT') === 'true') {
 } else {
     require 'wp-config-production.php';
 }
-echo 'WP_SITE_URL='      . escapeshellarg(WP_SITEURL)       . PHP_EOL;
+echo 'WP_SITE_URL='      . escapeshellarg(WP_SITE_URL)       . PHP_EOL;
 echo 'WP_SITE_TITLE='    . escapeshellarg(WP_SITE_TITLE)    . PHP_EOL;
 echo 'WP_ADMIN_USER='    . escapeshellarg(WP_ADMIN_USER)    . PHP_EOL;
 echo 'WP_ADMIN_PASSWORD='. escapeshellarg(WP_ADMIN_PASSWORD). PHP_EOL;
