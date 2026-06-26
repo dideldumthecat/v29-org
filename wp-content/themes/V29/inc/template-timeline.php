@@ -112,13 +112,16 @@ function v29_build_text_item( $post_id, $col_map ) {
     $start = get_field( 'start_date', $post_id );
     $end   = get_field( 'end_date', $post_id ) ?: null;
 
+    $start_year = (int) substr( $start, 0, 4 );
+    $is_period  = $end !== null || $start_year > (int) current_time( 'Y' );
+
     return [
         'item_type' => 'text',
         'body'      => v29_force_link_targets( wp_kses_post( get_field( 'body', $post_id ) ) ),
         'link'      => get_field( 'link', $post_id ) ?: null,
         'col_start' => v29_date_to_column( $start, $col_map ) ?: 2,
         'col_end'   => $end ? v29_date_to_column( $end, $col_map ) : null,
-        'is_period' => $end !== null,
+        'is_period' => $is_period,
     ];
 }
 
