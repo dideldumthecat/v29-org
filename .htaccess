@@ -1,8 +1,10 @@
 # Remove after the website is finished and ready to go live
-AuthType Basic
-AuthName "V29"
-AuthUserFile "/kunden/homepages/11/d605231043/htdocs/.htpasswd-v29"
-Require valid-user
+<If "%{HTTP_HOST} != 'v29.ddev.site'">
+    AuthType Basic
+    AuthName "V29"
+    AuthUserFile "/kunden/homepages/11/d605231043/htdocs/.htpasswd-v29"
+    Require valid-user
+</If>
 
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
