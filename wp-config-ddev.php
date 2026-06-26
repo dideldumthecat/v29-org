@@ -51,6 +51,16 @@ if ( empty( $table_prefix ) ) {
 	// phpcs:enable
 }
 
+/** Authentication Unique Keys and Salts — dev-only, not secret. */
+defined( 'AUTH_KEY' )         || define( 'AUTH_KEY',         'ddev-auth-key' );
+defined( 'SECURE_AUTH_KEY' )  || define( 'SECURE_AUTH_KEY',  'ddev-secure-auth-key' );
+defined( 'LOGGED_IN_KEY' )    || define( 'LOGGED_IN_KEY',    'ddev-logged-in-key' );
+defined( 'NONCE_KEY' )        || define( 'NONCE_KEY',        'ddev-nonce-key' );
+defined( 'AUTH_SALT' )        || define( 'AUTH_SALT',        'ddev-auth-salt' );
+defined( 'SECURE_AUTH_SALT' ) || define( 'SECURE_AUTH_SALT', 'ddev-secure-auth-salt' );
+defined( 'LOGGED_IN_SALT' )   || define( 'LOGGED_IN_SALT',   'ddev-logged-in-salt' );
+defined( 'NONCE_SALT' )       || define( 'NONCE_SALT',       'ddev-nonce-salt' );
+
 /** Install-time constants (used by install.sh) */
 defined( 'WP_SITE_TITLE' )     || define( 'WP_SITE_TITLE',     'V29' );
 defined( 'WP_ADMIN_USER' )     || define( 'WP_ADMIN_USER',     'admin' );

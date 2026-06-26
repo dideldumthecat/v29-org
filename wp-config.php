@@ -8,16 +8,6 @@ define( 'DB_CHARSET', 'utf8' );
 /** The database collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', '' );
 
-/** Authentication Unique Keys and Salts. */
-define( 'AUTH_KEY', '***REMOVED***' );
-define( 'SECURE_AUTH_KEY', '***REMOVED***' );
-define( 'LOGGED_IN_KEY', '***REMOVED***' );
-define( 'NONCE_KEY', '***REMOVED***' );
-define( 'AUTH_SALT', '***REMOVED***' );
-define( 'SECURE_AUTH_SALT', '***REMOVED***' );
-define( 'LOGGED_IN_SALT', '***REMOVED***' );
-define( 'NONCE_SALT', '***REMOVED***' );
-
 /* Add any custom values between this line and the "stop editing" line. */
 
 // WordPress auto-update configuration
