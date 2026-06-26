@@ -1,3 +1,9 @@
+# Remove after the website is finished and ready to go live
+AuthType Basic
+AuthName "V29"
+AuthUserFile "/kunden/homepages/11/d605231043/htdocs/.htpasswd-v29"
+Require valid-user
+
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
 RewriteEngine On
@@ -10,7 +16,6 @@ RewriteRule . /index.php [L]
 # END WordPress
 
 # IONOS-specific config
-AddHandler application/x-httpd-php84 .php
 ErrorDocument 503 "Server broken"
 ErrorDocument 500 "Server broken"
 ErrorDocument 404 "File not found"
