@@ -26,4 +26,5 @@ require_once get_template_directory() . '/inc/admin-rows-config.php';
 require_once get_template_directory() . '/inc/admin-rows-dragdrop-config.php';
 require_once get_template_directory() . '/inc/admin-timeline-item-order.php';
 require_once get_template_directory() . '/inc/admin-timeline-item-columns.php';
+require_once get_template_directory() . '/inc/admin-autoupdate-plugins.php';
 require_once get_template_directory() . '/inc/template-timeline.php';
