@@ -1,6 +1,6 @@
-# V29 Website
+# V29 Theme
 
-This is a headless WordPress setup using a custom headless theme theme and the `Secure Custom Fields` plugin. It uses DDEV for local development and provides the data for [dideldumthecat/lala-website-react](https://github.com/dideldumthecat/lala-website-react) through the REST API.
+A WordPress CMS project for the V29 architectural collective. Built on a custom Timber/Twig theme with Secure Custom Fields. DDEV handles the local environment.
 
 ## Prerequisites
 
@@ -12,35 +12,38 @@ This is a headless WordPress setup using a custom headless theme theme and the `
 1. Clone the repository:
 
     ```sh
-    git clone https://github.com/yourusername/lala-headless-wordpress.git
-    cd lala-headless-wordpress
+    git clone git@github.com:dideldumthecat/v29-org.git
+    cd v29-org
     ```
 
-2. Start the DDEV environment:
+2. Copy the env file and fill in the values (DDEV handles DB credentials automatically):
+
+    ```sh
+    cp .env.example .env
+    ```
+
+3. Start the DDEV environment:
 
     ```sh
     ddev start
     ```
 
-3. Import the database (if you have a database dump):
+4. Install WordPress, plugins, and activate the theme:
 
     ```sh
-    ddev import-db --src=path/to/your/database.sql.gz
+    ddev exec bash install.sh
     ```
 
-4. Access the site:
+5. Import the database dump:
+
+    ```sh
+    ddev import-db --src=v29.sql.gz
+    ```
+
+6. Open the site:
 
     ```sh
     ddev launch
     ```
 
-## Custom REST API Endpoint
-
-The project includes a custom REST API endpoints for the `tile` custom post type: `/wp-json/lala/v1/tiles`. This is used by [dideldumthecat/lala-website-react](https://github.com/dideldumthecat/lala-website-react) for providing CMS-based content.
-
-
-## Caching
-
-The project implements caching for the custom REST API endpoint using a JSON file. The cache is recreated whenever a `tile` post type is updated in the WordPress backend.
-
-GZIP compression is also enabled for the REST API response.
+    The local dev site runs at `https://v29.ddev.site/`.
