@@ -51,9 +51,6 @@ define( 'WPMS_SMTP_PASS', $_ENV['WPMS_SMTP_PASS'] );
 // Disable the plugin and theme editor
 define( 'DISALLOW_FILE_EDIT', true );
 
-// Disable WP cron due to performance issues and use a real cron job instead
-define('DISABLE_WP_CRON', true);
-
 /**
  * Set WordPress Database Table prefix if not already set.
  *
