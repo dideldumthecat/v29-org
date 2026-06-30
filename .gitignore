@@ -12,8 +12,6 @@
 /xmlrpc.php
 /wp-*.php
 !wp-config.php
-!wp-config-ddev.php
-wp-config-production.php
 
 # Ignore wp-content except for themes and plugins you want to version
 wp-content/upgrade*

@@ -2,26 +2,57 @@
 
 require_once dirname(__FILE__) . '/vendor/autoload.php';
 
+use Dotenv\Dotenv;
+
+// Load .env file
+$dotenv = Dotenv::createImmutable(dirname(__FILE__));
+$dotenv->load();
+
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
 
 /** The database collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', '' );
 
+/** Authentication Unique Keys and Salts. */
+define( 'AUTH_KEY', $_ENV['AUTH_KEY'] );
+define( 'SECURE_AUTH_KEY', $_ENV['SECURE_AUTH_KEY'] );
+define( 'LOGGED_IN_KEY', $_ENV['LOGGED_IN_KEY'] );
+define( 'NONCE_KEY', $_ENV['NONCE_KEY'] );
+define( 'AUTH_SALT', $_ENV['AUTH_SALT'] );
+define( 'SECURE_AUTH_SALT', $_ENV['SECURE_AUTH_SALT'] );
+define( 'LOGGED_IN_SALT', $_ENV['LOGGED_IN_SALT'] );
+define( 'NONCE_SALT', $_ENV['NONCE_SALT'] );
+
 /* Add any custom values between this line and the "stop editing" line. */
 
-// WordPress auto-update configuration
+// Configuration from .env file
+// wp-config-ddev.php not needed
+define( 'DB_NAME', $_ENV['DB_NAME'] );
+define( 'DB_USER', $_ENV['DB_USER'] );
+define( 'DB_PASSWORD', $_ENV['DB_PASSWORD'] );
+define( 'DB_HOST', $_ENV['DB_HOST'] );
+
+define( 'WP_DEBUG', $_ENV['WP_DEBUG'] === 'true' );
 define( 'WP_AUTO_UPDATE_CORE', 'minor' );
 
-// wp-mail-smtp plugin constants shared across environments
+// Configure the wp-mail-smtp plugin
 define( 'WPMS_ON', true );
+define( 'WPMS_MAIL_FROM', $_ENV['WPMS_MAIL_FROM'] );
+define( 'WPMS_MAIL_FROM_NAME', $_ENV['WPMS_MAIL_FROM_NAME'] );
 define( 'WPMS_MAILER', 'smtp' );
+define( 'WPMS_SMTP_HOST', $_ENV['WPMS_SMTP_HOST'] );
+define( 'WPMS_SMTP_PORT', $_ENV['WPMS_SMTP_PORT'] );
+define( 'WPMS_SSL', $_ENV['WPMS_SSL'] === 'true' );
+define( 'WPMS_SMTP_AUTH', $_ENV['WPMS_SMTP_AUTH'] === 'true' );
+define( 'WPMS_SMTP_USER', $_ENV['WPMS_SMTP_USER'] );
+define( 'WPMS_SMTP_PASS', $_ENV['WPMS_SMTP_PASS'] );
 
 // Disable the plugin and theme editor
 define( 'DISALLOW_FILE_EDIT', true );
 
 // Disable WP cron due to performance issues and use a real cron job instead
-define( 'DISABLE_WP_CRON', true );
+define('DISABLE_WP_CRON', true);
 
 /**
  * Set WordPress Database Table prefix if not already set.
@@ -37,15 +68,9 @@ if ( ! isset( $table_prefix ) || empty( $table_prefix ) ) {
 /* That's all, stop editing! Happy publishing. */
 
 /** Absolute path to the WordPress directory. */
-defined( 'ABSPATH' ) || define( 'ABSPATH', __DIR__ . '/' );
-
-if ( getenv( 'IS_DDEV_PROJECT' ) === 'true' ) {
-	require_once __DIR__ . '/wp-config-ddev.php';
-} else {
-	require_once __DIR__ . '/wp-config-production.php';
+if ( ! defined( 'ABSPATH' ) ) {
+	define( 'ABSPATH', __DIR__ . '/' );
 }
 
-/** Include wp-settings.php */
-if ( file_exists( ABSPATH . '/wp-settings.php' ) ) {
-	require_once ABSPATH . '/wp-settings.php';
-}
+/** Sets up WordPress vars and included files. */
+require_once ABSPATH . 'wp-settings.php';
