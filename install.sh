@@ -14,19 +14,33 @@ set +a
 # and call the WP-CLI phar directly under 8.4. Inside DDEV, `php` is already 8.4.
 wp() { command $INSTALL_WP_COMMAND "$@"; }
 
+# Approved plugins — add/remove entries here only
+PLUGINS=(
+  secure-custom-fields
+  wp-mail-smtp
+)
+
 # First install commands
 wp core download --path=./ --locale=en_US || true
 wp core install --path=./ --url="$INSTALL_SITE_URL" --title="$INSTALL_SITE_TITLE" --admin_user="$INSTALL_ADMIN_USER" --admin_password="$INSTALL_ADMIN_PASSWORD" --admin_email="$INSTALL_ADMIN_EMAIL"
 
-# Install the Secure Custom Fields and SMTP plugins
-wp plugin install secure-custom-fields --activate --force
-wp plugin install wp-mail-smtp --activate --force
+# Install and activate approved plugins (skips download if already present)
+for plugin in "${PLUGINS[@]}"; do
+  wp plugin install "$plugin" --activate
+done
 
 # Activate theme
 wp theme activate "V29"
 
-# Remove all other plugins except the SCF and SMTP plugins
-wp plugin list --status=inactive --field=name | grep -v "wp-mail-smtp" | grep -v "secure-custom-fields" | while read -r name; do wp plugin delete "$name"; done
+# Delete any plugin not in the approved list (active or inactive)
+is_approved_plugin() {
+  local name="$1" p
+  for p in "${PLUGINS[@]}"; do [ "$name" = "$p" ] && return 0; done
+  return 1
+}
+while read -r name; do
+  is_approved_plugin "$name" || wp plugin delete "$name"
+done < <(wp plugin list --field=name)
 
 # Remove all other themes except the activated theme
 wp theme list --status=inactive --field=name | grep -v "V29" | while read -r name; do wp theme delete "$name"; done
