@@ -353,7 +353,7 @@ a:hover {
 
 .cell a[href^="http"]::after,
 .info-cell a[href^="http"]::after {
-    content: " ↗";
+    content: " \2197\FE0E";
     -webkit-text-stroke: 1px currentColor;
     margin-right: 0.5rem;
 }
@@ -363,7 +363,7 @@ a.cell[href^="http"] {
 }
 
 a.cell[href^="http"]::after {
-    content: "↗";
+    content: "\2197\FE0E";
     position: absolute;
     top: 10px;
     right: 10px;
