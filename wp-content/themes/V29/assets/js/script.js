@@ -410,6 +410,7 @@ let animationActive = false;
 let requestAnimationFrameId = null;
 
 const imageCache = new Map();
+const pendingLoads = new Set();
 
 const PRELOAD_AHEAD = 6;
 const PRELOAD_BEHIND = 2;
@@ -448,16 +449,24 @@ function buildFrames(prefix) {
 // ------------------------------
 function preloadFrame(index) {
     if (index < 0 || index >= webpFrames.length) return;
-    if (imageCache.has(index)) return;
+    if (imageCache.has(index) || pendingLoads.has(index)) return;
+
+    pendingLoads.add(index);
 
     const load = () => {
         const img = new Image();
+        img.onload = () => {
+            imageCache.set(index, img);
+            pendingLoads.delete(index);
+        };
+        img.onerror = () => {
+            pendingLoads.delete(index);
+        };
         img.src = webpFrames[index];
-        imageCache.set(index, img);
     };
 
     if ("requestIdleCallback" in window) {
-        requestIdleCallback(load);
+        requestIdleCallback(load, { timeout: 200 });
     } else {
         setTimeout(load, 0);
     }
@@ -482,6 +491,9 @@ function preloadAround(index) {
 // ------------------------------
 // Animation
 // ------------------------------
+let stallTicks = 0;
+const MAX_STALL_TICKS = 3; // give preload a few extra ticks before giving up on a frame
+
 function animateWebPSequence(timestamp) {
     if (!lastTime) lastTime = timestamp;
 
@@ -493,13 +505,18 @@ function animateWebPSequence(timestamp) {
 
         if (cached) {
             titleImg.src = cached.src;
+            stallTicks = 0;
+            frameIndex = (frameIndex + 1) % webpFrames.length;
+        } else if (stallTicks < MAX_STALL_TICKS) {
+            // not ready yet — retry the same frame next tick instead of racing ahead
+            stallTicks++;
         } else {
-            titleImg.src = webpFrames[frameIndex];
+            // still not ready after a few tries — move on rather than freeze indefinitely
+            stallTicks = 0;
+            frameIndex = (frameIndex + 1) % webpFrames.length;
         }
 
         preloadAround(frameIndex);
-
-        frameIndex = (frameIndex + 1) % webpFrames.length;
         lastTime = timestamp;
     }
 
