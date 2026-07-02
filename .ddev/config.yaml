@@ -13,6 +13,18 @@ use_dns_when_possible: true
 composer_version: "2"
 web_environment: []
 corepack_enable: false
+hooks:
+  pre-share:
+    # provide DDEV_SHARE_URL in container
+    - exec-host: echo "${DDEV_SHARE_URL}" >.ddev/share_url.txt
+    # Save database for restore later
+    - exec-host: ddev export-db --file=/tmp/tmpdump.sql.gz
+    # Change the URL in the database
+    - exec: wp search-replace ${DDEV_PRIMARY_URL} $(cat /mnt/ddev_config/share_url.txt) | grep Success
+    - exec: wp cache flush
+  post-share:
+    # Put back the things we changed
+    - exec-host: ddev import-db --file=/tmp/tmpdump.sql.gz
 
 # Key features of DDEV's config.yaml:
 

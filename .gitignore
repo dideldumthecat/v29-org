@@ -1,3 +1,6 @@
+# DDEV
+.ddev/share_url.txt
+
 # Ignore composer dependencies
 /vendor/
 
