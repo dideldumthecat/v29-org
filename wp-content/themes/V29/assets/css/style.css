@@ -360,6 +360,7 @@ a:hover {
 
 a.cell[href^="http"] {
     position: relative;
+    text-decoration: none;
 }
 
 a.cell[href^="http"]::after {
