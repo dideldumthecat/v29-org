@@ -38,14 +38,22 @@ button,
 input,
 select,
 textarea {
-    font-family: inherit;
     font-weight: inherit;
     font-size: inherit;
 }
 
+a {
+    color: inherit;
+    text-decoration: underline dotted;
+    text-underline-offset: 4px;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
 .section {
     padding: 40px;
-    box-sizing: border-box;
 }
 
 .top {
@@ -158,11 +166,6 @@ textarea {
     text-align: left;
 }
 
-.info-cell a {
-    color: black;
-    text-decoration: underline dotted;
-}
-
 .header {
     position: sticky;
     z-index: 25;
@@ -210,7 +213,6 @@ textarea {
 .cell {
     display: flex;
     align-items: center;
-    box-sizing: border-box;
     white-space: normal;
     word-break: break-word;
     padding-left: 15px;
@@ -242,10 +244,6 @@ textarea {
     background: white;
     mix-blend-mode: color-dodge;
     opacity: 1;
-}
-
-.period a {
-    color: black;
 }
 
 .lightbox {
@@ -334,24 +332,7 @@ textarea {
     filter: brightness(1.25);
 }
 
-.cell.split {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    padding-left: 0;
-}
-
-a {
-    color: inherit;
-    text-decoration: underline dotted;
-    text-underline-offset: 4px;
-}
-
-a:hover {
-    text-decoration: none;
-}
-
-.cell a[href^="http"]::after,
-.info-cell a[href^="http"]::after {
+.cell a[href^="http"]::after {
     content: " \2197\FE0E";
     -webkit-text-stroke: 1px currentColor;
     margin-right: 0.5rem;
@@ -372,14 +353,6 @@ a.cell[href^="http"]::after {
     opacity: 0.75;
     pointer-events: none;
     -webkit-text-stroke: 1px currentColor;
-}
-
-.cell-top,
-.cell-bottom {
-    padding-left: 15px;
-    display: flex;
-    align-items: center;
-    height: 100%;
 }
 
 .timeline-controls {
