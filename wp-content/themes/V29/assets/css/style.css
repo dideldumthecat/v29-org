@@ -344,7 +344,7 @@ textarea {
 
 a {
     color: inherit;
-    text-decoration: underline dotted;
+    text-decoration: underline dashed;
 }
 
 a:hover {
