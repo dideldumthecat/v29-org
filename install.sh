@@ -18,6 +18,7 @@ wp() { command $INSTALL_WP_COMMAND "$@"; }
 PLUGINS=(
   secure-custom-fields
   wp-mail-smtp
+  wp-super-cache
 )
 
 # First install commands

@@ -5,6 +5,7 @@ require_once dirname(__FILE__) . '/vendor/autoload.php';
 use Dotenv\Dotenv;
 
 // Load .env file
+define( 'WPCACHEHOME', '/var/www/html/wp-content/plugins/wp-super-cache/' );
 $dotenv = Dotenv::createImmutable(dirname(__FILE__));
 $dotenv->load();
 
@@ -35,6 +36,7 @@ define( 'DB_HOST', $_ENV['DB_HOST'] );
 
 define( 'WP_DEBUG', $_ENV['WP_DEBUG'] === 'true' );
 define( 'DISABLE_WP_CRON', $_ENV['DISABLE_WP_CRON'] === 'true' );
+define( 'WP_CACHE', ( $_ENV['WP_CACHE'] ?? '' ) === 'true' );
 define( 'WP_AUTO_UPDATE_CORE', 'minor' );
 
 // Configure the wp-mail-smtp plugin

@@ -10,6 +10,9 @@ key.pem
 known_hosts
 wp-content/uploads
 wp-content/plugins
+wp-content/cache
+wp-content/advanced-cache.php
+wp-content/wp-cache-config.php
 wp-admin
 wp-includes
 + wp-config.php
