@@ -34,6 +34,7 @@ define( 'DB_PASSWORD', $_ENV['DB_PASSWORD'] );
 define( 'DB_HOST', $_ENV['DB_HOST'] );
 
 define( 'WP_DEBUG', $_ENV['WP_DEBUG'] === 'true' );
+define( 'DISABLE_WP_CRON', $_ENV['DISABLE_WP_CRON'] === 'true' );
 define( 'WP_AUTO_UPDATE_CORE', 'minor' );
 
 // Configure the wp-mail-smtp plugin
