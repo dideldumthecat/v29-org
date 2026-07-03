@@ -12,6 +12,7 @@ wp-content/uploads
 wp-content/plugins
 wp-admin
 wp-includes
++ wp-config.php
 wp-*.php
 xmlrpc.php
 index.php
