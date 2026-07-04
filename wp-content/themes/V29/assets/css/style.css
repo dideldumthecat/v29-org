@@ -250,9 +250,29 @@ a:hover {
     display: none;
     position: fixed;
     inset: 0;
-    z-index: 2000;
+    /* Above the timeline controls (3000), below the impressum overlay (4015). */
+    z-index: 3500;
     justify-content: center;
     align-items: center;
+    /* Frosted backdrop: echoes the blurred timeline background and mutes it
+       toward the site's luminosity/monochrome treatment. */
+    background: rgba(0, 0, 0, 0.2);
+    -webkit-backdrop-filter: blur(40px) saturate(60%);
+    backdrop-filter: blur(40px) saturate(60%);
+}
+
+/* Lock page scrolling while an overlay is open (classes toggled in script.js).
+   The impressum overlay stays scrollable through its own overflow-y: auto. */
+body.lightbox-open,
+body.impressum-open {
+    overflow: hidden;
+}
+
+/* Without backdrop-filter the light tint alone is not enough — fall back to a stronger one. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .lightbox {
+        background: rgba(0, 0, 0, 0.55);
+    }
 }
 
 .lightbox-track {
@@ -279,10 +299,6 @@ a:hover {
     margin-top: 10px;
     text-align: center;
     width: 100%;
-    text-shadow:
-        0 0 3px rgba(0, 0, 0, 0.2),
-        0 0 6px rgba(0, 0, 0, 0.15),
-        0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .lightbox-media {

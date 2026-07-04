@@ -127,10 +127,12 @@ function openLightbox(mediaData) {
     renderCarousel();
 
     lightbox.style.display = "flex";
+    document.body.classList.add("lightbox-open");
 }
 
 function closeLightbox() {
     lightbox.style.display = "none";
+    document.body.classList.remove("lightbox-open");
 }
 
 document.querySelectorAll(".thumbnail").forEach((el) => {
@@ -334,10 +336,12 @@ const impressumLink = document.getElementById("impressum-link");
 impressumLink.addEventListener("click", (e) => {
     e.preventDefault();
     impressumOverlay.style.display = "flex";
+    document.body.classList.add("impressum-open");
 });
 
 impressumClose.addEventListener("click", () => {
     impressumOverlay.style.display = "none";
+    document.body.classList.remove("impressum-open");
 });
 
 
