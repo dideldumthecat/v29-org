@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+## Description: Mirror the live site (database + uploads) into DDEV
+## Usage: sync [--skip-db] [--skip-files]
+## Example: "ddev sync"
+
+set -eu -o pipefail
+
+cd "$DDEV_APPROOT"
+
+skip_database=false
+skip_files=false
+for argument in "$@"; do
+  case "$argument" in
+    --skip-db) skip_database=true ;;
+    --skip-files) skip_files=true ;;
+    *) echo "Unknown option: $argument" >&2; exit 1 ;;
+  esac
+done
+
+set -a
+source .env
+set +a
+
+if [ -z "${SYNC_SSH_HOST:-}" ] || [ -z "${SYNC_REMOTE_PATH:-}" ]; then
+  echo "Error: SYNC_SSH_HOST and SYNC_REMOTE_PATH must be set in .env (see .env.example)." >&2
+  exit 1
+fi
+SYNC_REMOTE_PATH="${SYNC_REMOTE_PATH%/}"
+
+# Run WP-CLI on the server the same way install.sh does: via INSTALL_WP_COMMAND
+# from the remote .env (the IONOS `wp` wrapper is pinned to PHP 8.0)
+remote_wp_cli="cd '$SYNC_REMOTE_PATH' && set -a && . .env && set +a && \$INSTALL_WP_COMMAND"
+
+snapshot_name="pre-sync-$(date +%Y%m%d%H%M%S)"
+echo "Saving local database snapshot '$snapshot_name' ..."
+ddev snapshot --name="$snapshot_name" >/dev/null
+
+if [ "$skip_database" = false ]; then
+  live_url=$(ssh "$SYNC_SSH_HOST" "$remote_wp_cli option get siteurl" | tr -d '[:space:]')
+
+  temporary_directory=$(mktemp -d)
+  trap 'rm -rf "$temporary_directory"' EXIT
+  dump_file="$temporary_directory/live-db.sql.gz"
+
+  echo "Exporting live database from $live_url ..."
+  ssh "$SYNC_SSH_HOST" "$remote_wp_cli db export -" | gzip > "$dump_file"
+
+  echo "Importing database ..."
+  ddev import-db --file="$dump_file"
+
+  echo "Rewriting $live_url to $DDEV_PRIMARY_URL ..."
+  ddev wp search-replace "$live_url" "$DDEV_PRIMARY_URL" --all-tables | tail -1
+  live_url_http="${live_url/#https:/http:}"
+  if [ "$live_url_http" != "$live_url" ]; then
+    ddev wp search-replace "$live_url_http" "$DDEV_PRIMARY_URL" --all-tables | tail -1
+  fi
+
+  # Keep the local admin login working instead of the live credentials
+  ddev wp user update "$INSTALL_ADMIN_USER" --user_pass="$INSTALL_ADMIN_PASSWORD" --skip-email || true
+fi
+
+if [ "$skip_files" = false ]; then
+  echo "Mirroring uploads from live ..."
+  mkdir -p wp-content/uploads
+  rsync -az --delete "$SYNC_SSH_HOST:$SYNC_REMOTE_PATH/wp-content/uploads/" wp-content/uploads/
+fi
+
+ddev wp cache flush >/dev/null || true
+rm -rf wp-content/cache/* || true
+
+echo ""
+echo "Sync complete: $DDEV_PRIMARY_URL now mirrors the live site."
+echo "Restore the previous local state with: ddev snapshot restore $snapshot_name"
