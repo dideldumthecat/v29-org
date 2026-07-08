@@ -254,8 +254,6 @@ a:hover {
     z-index: 3500;
     justify-content: center;
     align-items: center;
-    /* Frosted backdrop: echoes the blurred timeline background and mutes it
-       toward the site's luminosity/monochrome treatment. */
     background: rgba(0, 0, 0, 0.2);
     -webkit-backdrop-filter: blur(40px) saturate(60%);
     backdrop-filter: blur(40px) saturate(60%);
@@ -268,7 +266,6 @@ body.impressum-open {
     overflow: hidden;
 }
 
-/* Without backdrop-filter the light tint alone is not enough — fall back to a stronger one. */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
     .lightbox {
         background: rgba(0, 0, 0, 0.55);
@@ -408,9 +405,7 @@ a.cell[href^="http"]::after {
 
 .github-fork-ribbon::after {
     content: attr(data-ribbon);
-    /* Inset the dotted border from the band edges: shrink this box by 0.25em
-       each side (padding 1em -> 0.75em) and nudge top down 0.25em so it stays
-       centered inside the .before band, which keeps its size/position. */
+    /* Smaller than the ::before band each side; top re-centers it as padding changes. */
     top: 2.34em;
     padding: 0.75em 0;
     border-width: 0.2em 0;
@@ -422,7 +417,6 @@ a.cell[href^="http"]::after {
     text-align: center;
     text-decoration: none;
     text-indent: 0;
-    text-shadow: 0 -0.08em rgba(0, 0, 0, 0.5);
 }
 
 .timeline-controls {

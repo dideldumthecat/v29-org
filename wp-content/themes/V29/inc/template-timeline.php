@@ -141,8 +141,7 @@ function v29_build_media_item( $post_id, $col_map ) {
             'format'  => ( strpos( $mime, 'video/' ) === 0 ) ? 'video' : 'image',
             'src'     => $file['url'],
             'caption' => $entry['caption'] ?? '',
-            // 'white' is intentionally omitted for now — it becomes the hook for the
-            // is_drawing / white-flag multiply treatment when that field lands.
+            // script.js reads media.white to toggle the .white-image class — not emitted here yet.
         ];
     }
 
