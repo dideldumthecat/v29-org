@@ -371,6 +371,60 @@ a.cell[href^="http"]::after {
     -webkit-text-stroke: 1px currentColor;
 }
 
+/* "Fork me on GitHub" ribbon, adapted from
+   https://github.com/simonwhitaker/github-fork-ribbon-css (MIT License). */
+.github-fork-ribbon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    width: 12.1em;
+    height: 12.1em;
+    overflow: hidden;
+    font-size: 13px;
+    text-decoration: none;
+    text-indent: -999999px;
+    pointer-events: none;
+}
+
+.github-fork-ribbon::before,
+.github-fork-ribbon::after {
+    position: absolute;
+    display: block;
+    top: 2.09em;
+    right: -3.7em;
+    width: 15.38em;
+    height: 1.24em;
+    box-sizing: content-box;
+    transform: rotate(45deg);
+}
+
+.github-fork-ribbon::before {
+    content: "";
+    padding: 1.2em 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    pointer-events: auto;
+}
+
+.github-fork-ribbon::after {
+    content: attr(data-ribbon);
+    /* Inset the dotted border from the band edges: shrink this box by 0.25em
+       each side (padding 1em -> 0.75em) and nudge top down 0.25em so it stays
+       centered inside the .before band, which keeps its size/position. */
+    top: 2.34em;
+    padding: 0.75em 0;
+    border-width: 0.2em 0;
+    border-style: dotted;
+    border-color: #fff;
+    color: #fff;
+    font-weight: 700;
+    line-height: 1.24em;
+    text-align: center;
+    text-decoration: none;
+    text-indent: 0;
+    text-shadow: 0 -0.08em rgba(0, 0, 0, 0.5);
+}
+
 .timeline-controls {
     position: fixed;
     bottom: 20px;
