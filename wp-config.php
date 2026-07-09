@@ -5,7 +5,6 @@ require_once dirname(__FILE__) . '/vendor/autoload.php';
 use Dotenv\Dotenv;
 
 // Load .env file
-define( 'WPCACHEHOME', '/var/www/html/wp-content/plugins/wp-super-cache/' );
 $dotenv = Dotenv::createImmutable(dirname(__FILE__));
 $dotenv->load();
 
@@ -53,6 +52,9 @@ define( 'WPMS_SMTP_PASS', $_ENV['WPMS_SMTP_PASS'] );
 
 // Disable the plugin and theme editor
 define( 'DISALLOW_FILE_EDIT', true );
+
+// Configuration for the WP Super Cache plugin
+define( 'WPCACHEHOME', __DIR__ . '/wp-content/plugins/wp-super-cache/' );
 
 /**
  * Set WordPress Database Table prefix if not already set.
