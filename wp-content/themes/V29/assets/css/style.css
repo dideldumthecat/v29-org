@@ -345,12 +345,6 @@ body.impressum-open {
     filter: brightness(1.25);
 }
 
-.cell a[href^="http"]::after {
-    content: " \2197\FE0E";
-    -webkit-text-stroke: 1px currentColor;
-    margin-right: 0.5rem;
-}
-
 a.cell[href^="http"] {
     position: relative;
     text-decoration: none;
