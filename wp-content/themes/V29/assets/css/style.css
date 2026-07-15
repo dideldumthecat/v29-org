@@ -166,6 +166,10 @@ a:hover {
     text-align: left;
 }
 
+.info-cell p a {
+    margin-right: 25px;
+}
+
 .header {
     position: sticky;
     z-index: 25;
