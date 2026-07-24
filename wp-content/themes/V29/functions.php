@@ -29,4 +29,5 @@ require_once get_template_directory() . '/inc/admin-timeline-item-columns.php';
 require_once get_template_directory() . '/inc/admin-timeline-item-title-hint.php';
 require_once get_template_directory() . '/inc/admin-autoupdate-plugins.php';
 require_once get_template_directory() . '/inc/admin-notifications.php';
+require_once get_template_directory() . '/inc/admin-security-hardening.php';
 require_once get_template_directory() . '/inc/template-timeline.php';
