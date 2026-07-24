@@ -57,3 +57,21 @@ function v29_block_author_enumeration() {
  * ---------------------------------------------------------------------- */
 remove_action( 'wp_head', 'wp_generator' );
 add_filter( 'the_generator', '__return_empty_string' );
+
+/* -------------------------------------------------------------------------
+ * 4. Security headers — PHP twin of the mod_headers block in the site-root
+ *    .htaccess. On IONOS the .htaccess versions only reach static files; PHP
+ *    responses go through the x-ws proxy tier, which passes only headers PHP
+ *    sets itself, so the same headers are re-sent here. Keep the two lists in
+ *    sync (the .htaccess block carries a matching pointer back to here).
+ *    Strict-Transport-Security is emitted unconditionally so it survives even
+ *    when the proxy terminates TLS and reaches the origin over plain HTTP.
+ *    header() replaces, so core's admin/login headers are not duplicated.
+ * ---------------------------------------------------------------------- */
+add_action( 'send_headers', 'v29_send_security_headers' );
+function v29_send_security_headers() {
+	header( 'X-Content-Type-Options: nosniff' );
+	header( 'X-Frame-Options: SAMEORIGIN' );
+	header( 'Referrer-Policy: strict-origin-when-cross-origin' );
+	header( 'Strict-Transport-Security: max-age=31536000; includeSubDomains' );
+}

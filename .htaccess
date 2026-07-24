@@ -64,11 +64,16 @@ ErrorDocument 401 "Authentication required"
 </IfModule>
 
 # Disable ETag when using expires module
+# The security headers below reach only static-file responses on IONOS; PHP/HTML
+# is served through the x-ws proxy, which strips them. Their twins are re-sent
+# from PHP in theme inc/admin-security-hardening.php (v29_send_security_headers) —
+# keep both lists in sync.
 <IfModule mod_headers.c>
     Header unset ETag
     Header always set X-Content-Type-Options "nosniff"
     Header always set X-Frame-Options "SAMEORIGIN"
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 </IfModule>
 FileETag None
 
