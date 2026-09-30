@@ -41,10 +41,13 @@ is_approved_plugin() {
 }
 while read -r name; do
   is_approved_plugin "$name" || wp plugin delete "$name"
-done < <(wp plugin list --field=name)
+done < <(wp plugin list --field=name --status=active,inactive)
 
 # Remove all other themes except the activated theme
 wp theme list --status=inactive --field=name | grep -v "V29" | while read -r name; do wp theme delete "$name"; done
+
+# Drop cached pages that still reference the previous deploy
+wp eval 'wp_cache_clear_cache(); echo "Page cache cleared\n";'
 
 # For local development
 # wp user update admin --user_pass=admin
