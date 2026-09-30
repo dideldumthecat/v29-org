@@ -1,0 +1,49 @@
+[
+    {
+        "key": "group_v29_years",
+        "title": "Month view",
+        "fields": [
+            {
+                "key": "field_v29_month_view_until",
+                "label": "Show months up to and including",
+                "name": "v29_month_view_until",
+                "aria_label": "",
+                "type": "select",
+                "instructions": "Years up to and including this one are shown in months. Past years and the current year always are. The setting takes care of itself once that year is reached.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": [],
+                "default_value": false,
+                "return_format": "value",
+                "multiple": 0,
+                "allow_null": 0,
+                "ui": 0,
+                "ajax": 0,
+                "placeholder": ""
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "options_page",
+                    "operator": "==",
+                    "value": "v29-years"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "Unlocks the month view for upcoming years.",
+        "show_in_rest": 0
+    }
+]

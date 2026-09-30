@@ -1,18 +1,22 @@
 <?php
 
+function v29_get_month_view_until() {
+    return max( (int) current_time( 'Y' ), (int) get_field( 'v29_month_view_until', 'option' ) );
+}
+
 function v29_get_timeline_columns() {
     $bounds = v29_get_timeline_bounds();
     if ( ! $bounds ) {
         return [];
     }
 
-    $current_year = (int) current_time( 'Y' );
-    $last_year    = max( $bounds['end_year'], $current_year );
+    $month_view_until = v29_get_month_view_until();
+    $last_year        = max( $bounds['end_year'], $month_view_until );
 
     $columns = [];
 
     for ( $year = $bounds['start_year']; $year <= $last_year; $year++ ) {
-        if ( $year <= $current_year ) {
+        if ( $year <= $month_view_until ) {
             $from = ( $year === $bounds['start_year'] ) ? $bounds['start_month'] : 1;
             for ( $month = $from; $month <= 12; $month++ ) {
                 $columns[] = [ 'col_type' => 'month', 'year' => $year, 'month' => $month ];
@@ -113,7 +117,7 @@ function v29_build_text_item( $post_id, $col_map ) {
     $end   = get_field( 'end_date', $post_id ) ?: null;
 
     $start_year = (int) substr( $start, 0, 4 );
-    $is_period  = $end !== null || $start_year > (int) current_time( 'Y' );
+    $is_period  = $end !== null || $start_year > v29_get_month_view_until();
 
     return [
         'item_type' => 'text',
