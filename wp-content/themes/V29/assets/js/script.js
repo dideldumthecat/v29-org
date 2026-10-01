@@ -10,7 +10,7 @@ const todayButton = document.getElementById("timeline-today");
 const endButton = document.getElementById("timeline-end");
 const zoomButton = document.getElementById("timeline-zoom");
 
-const zoomLevels = [150, 100, 60, 200];
+const zoomLevels = [170, 120, 80, 220];
 let zoomIndex = 0;
 
 // Lightbox
@@ -155,7 +155,7 @@ function getMonthWidth() {
 
 function getLabelWidth() {
     const labelEl = document.querySelector(".row-title");
-    return labelEl ? labelEl.offsetWidth : 150;
+    return labelEl ? labelEl.offsetWidth : 170;
 }
 
 function getTodayPosition() {
@@ -284,7 +284,7 @@ endButton.addEventListener("click", () => {
 // Standardbreite beim Laden
 // ------------------------------
 document.addEventListener("DOMContentLoaded", () => {
-    document.documentElement.style.setProperty("--month-width", "150px");
+    document.documentElement.style.setProperty("--month-width", "170px");
     updateTodayLine();
 });
 

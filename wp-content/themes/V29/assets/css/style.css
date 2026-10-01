@@ -1,5 +1,5 @@
 :root {
-    --month-width: 150px;
+    --month-width: 170px;
 }
 
 .sr-only {
@@ -351,20 +351,38 @@ body.impressum-open {
 }
 
 a.cell[href^="http"] {
-    position: relative;
     text-decoration: none;
 }
 
-a.cell[href^="http"]::after {
-    content: "\2197\FE0E";
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    font-size: 1.5rem;
+.cell-content {
+    display: flex;
+    align-items: flex-start;
+    min-width: 0;
+}
+
+.cell-text {
+    min-width: 0;
+}
+
+.cell-arrow {
+    flex: none;
+    width: 20px;
+    margin-left: 5px;
+    font-size: 1.25rem;
     line-height: 1;
     opacity: 0.75;
     pointer-events: none;
     -webkit-text-stroke: 1px currentColor;
+}
+
+.period .cell-content {
+    flex: 1;
+    align-self: stretch;
+}
+
+.period .cell-text {
+    flex: 1;
+    align-self: center;
 }
 
 .timeline-controls {
