@@ -266,6 +266,42 @@ zoomButton.addEventListener("click", () => {
 });
 
 // ------------------------------
+// Link-Pfeil: Milestone-Text auf die längste Zeile schrumpfen
+// ------------------------------
+// Ein umbrochener Textblock ist so breit wie der verfügbare Platz; gemessen
+// wird deshalb jede Zeile der Textknoten einzeln, damit der Pfeil direkt
+// rechts neben der längsten Zeile sitzt.
+function fitTextToLongestLine(textElement) {
+    textElement.style.width = "";
+
+    const left = textElement.getBoundingClientRect().left;
+    const range = document.createRange();
+    const walker = document.createTreeWalker(textElement, NodeFilter.SHOW_TEXT);
+    let longestLine = 0;
+
+    while (walker.nextNode()) {
+        range.selectNodeContents(walker.currentNode);
+        for (const rect of range.getClientRects()) {
+            longestLine = Math.max(longestLine, rect.right - left);
+        }
+    }
+
+    if (longestLine) {
+        textElement.style.width = Math.ceil(longestLine) + "px";
+    }
+}
+
+const milestoneTextObserver = new ResizeObserver((entries) => {
+    entries.forEach((entry) => fitTextToLongestLine(entry.target.querySelector(".cell-text")));
+});
+
+document.querySelectorAll("a.cell.milestone").forEach((cell) => milestoneTextObserver.observe(cell));
+
+document.fonts.ready.then(() => {
+    document.querySelectorAll("a.cell.milestone .cell-text").forEach(fitTextToLongestLine);
+});
+
+// ------------------------------
 // Buttons: Start, Heute, Info
 // ------------------------------
 startButton.addEventListener("click", () => scrollTimelineTo(0));
