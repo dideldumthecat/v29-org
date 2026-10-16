@@ -170,6 +170,20 @@ a:hover {
     margin-right: 25px;
 }
 
+.info-cell .instagram-link {
+    display: inline-block;
+    padding-bottom: 4px;
+}
+
+.info-cell .instagram-link:hover {
+    border-bottom-color: transparent;
+}
+
+.info-cell .instagram-link svg {
+    display: inline;
+    vertical-align: super;
+}
+
 .header {
     position: sticky;
     z-index: 25;
